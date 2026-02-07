@@ -1,12 +1,35 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
+import UploadView from "@/components/UploadView";
+import ProcessingView from "@/components/ProcessingView";
+import ResultsView from "@/components/ResultsView";
+
+type AppView = "upload" | "processing" | "results";
 
 const Index = () => {
+  const [currentView, setCurrentView] = useState<AppView>("upload");
+
+  const handleFilesUploaded = useCallback(() => {
+    setCurrentView("processing");
+  }, []);
+
+  const handleProcessingComplete = useCallback(() => {
+    setCurrentView("results");
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="wealth-gradient-bg min-h-screen">
+      <AnimatePresence mode="wait">
+        {currentView === "upload" && (
+          <UploadView key="upload" onFilesUploaded={handleFilesUploaded} />
+        )}
+        {currentView === "processing" && (
+          <ProcessingView key="processing" onComplete={handleProcessingComplete} />
+        )}
+        {currentView === "results" && (
+          <ResultsView key="results" />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
