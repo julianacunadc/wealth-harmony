@@ -62,6 +62,33 @@ const UploadView = ({ onFilesUploaded }: UploadViewProps) => {
       className="flex flex-col items-center justify-center min-h-screen px-6 py-12"
     >
       <div className="w-full max-w-lg text-center">
+        {/* Brand Mark — static aurora orbs, resting state */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative w-32 h-32 mx-auto mb-8"
+        >
+          <motion.div
+            animate={{ scale: [1, 1.03, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <div
+              className="absolute w-16 h-16 rounded-full"
+              style={{ background: "hsl(var(--wealth-aurora-1) / 0.7)", filter: "blur(20px)", top: "20%", left: "22%" }}
+            />
+            <div
+              className="absolute w-20 h-20 rounded-full"
+              style={{ background: "hsl(var(--wealth-aurora-2) / 0.6)", filter: "blur(24px)", top: "28%", right: "18%" }}
+            />
+            <div
+              className="absolute w-14 h-14 rounded-full"
+              style={{ background: "hsl(var(--wealth-aurora-3) / 0.55)", filter: "blur(18px)", bottom: "18%", left: "34%" }}
+            />
+          </motion.div>
+        </motion.div>
+
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
