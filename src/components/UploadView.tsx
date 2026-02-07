@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { Upload, FileText, X } from "lucide-react";
 import { motion } from "framer-motion";
-import PointCloudSphere from "./PointCloudSphere";
 
 interface UploadViewProps {
   onFilesUploaded: () => void;
@@ -63,16 +62,6 @@ const UploadView = ({ onFilesUploaded }: UploadViewProps) => {
       className="flex flex-col items-center justify-center min-h-screen px-6 py-12"
     >
       <div className="w-full max-w-lg text-center">
-        {/* Brand Mark — Point Cloud Sphere, resting state */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="mx-auto mb-8 flex items-center justify-center"
-        >
-          <PointCloudSphere size={180} breathing={false} />
-        </motion.div>
-
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
