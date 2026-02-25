@@ -14,7 +14,10 @@ const UploadView = ({ onFilesUploaded }: UploadViewProps) => {
 
   useEffect(() => {
     if (files.length > 0 && ctaRef.current) {
-      ctaRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      const timer = setTimeout(() => {
+        ctaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 300);
+      return () => clearTimeout(timer);
     }
   }, [files.length]);
 
