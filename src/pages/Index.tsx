@@ -19,7 +19,7 @@ const Index = () => {
 
   return (
     <div className="wealth-gradient-bg min-h-screen">
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {currentView === "upload" && (
           <UploadView key="upload" onFilesUploaded={handleFilesUploaded} />
         )}
