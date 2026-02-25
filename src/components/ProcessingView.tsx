@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import BreathingOrbs from "./BreathingOrbs";
 
 const statusMessages = [
   "Reading your PDFs...",
@@ -43,31 +44,7 @@ const ProcessingView = ({ onComplete }: ProcessingViewProps) => {
       transition={{ duration: 0.6 }}
       className="flex flex-col items-center justify-center min-h-screen px-6"
     >
-      {/* Breathing orbs */}
-      <div className="relative w-64 h-64 mb-12">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            className="absolute w-40 h-40 rounded-full animate-breathe"
-            style={{ background: "hsl(252 80% 80% / 0.4)", filter: "blur(40px)" }}
-          />
-          <div
-            className="absolute w-48 h-48 rounded-full animate-breathe-slow"
-            style={{ background: "hsl(220 80% 78% / 0.35)", filter: "blur(50px)" }}
-          />
-          <div
-            className="absolute w-36 h-36 rounded-full animate-breathe-alt"
-            style={{ background: "hsl(30 80% 80% / 0.3)", filter: "blur(40px)" }}
-          />
-          <div
-            className="absolute w-32 h-32 rounded-full animate-breathe"
-            style={{
-              background: "hsl(252 56% 57% / 0.25)",
-              filter: "blur(35px)",
-              animationDelay: "1s",
-            }}
-          />
-        </div>
-      </div>
+      <BreathingOrbs className="w-64 h-64 mb-12" />
 
       <motion.p
         key={messageIndex}
