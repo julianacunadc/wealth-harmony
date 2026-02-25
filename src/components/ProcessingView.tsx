@@ -44,7 +44,7 @@ const ProcessingView = ({ onComplete }: ProcessingViewProps) => {
       transition={{ duration: 0.6 }}
       className="flex flex-col items-center justify-center min-h-screen px-6"
     >
-      <BreathingOrbs className="w-64 h-64 mb-12" />
+      <BreathingOrbs className="w-64 h-64 mb-12" layoutId="breathing-orbs" />
 
       <motion.p
         key={messageIndex}

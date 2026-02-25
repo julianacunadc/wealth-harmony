@@ -1,10 +1,13 @@
+import { motion } from "framer-motion";
+
 interface BreathingOrbsProps {
   className?: string;
+  layoutId?: string;
 }
 
-const BreathingOrbs = ({ className = "w-64 h-64" }: BreathingOrbsProps) => {
+const BreathingOrbs = ({ className = "w-64 h-64", layoutId }: BreathingOrbsProps) => {
   return (
-    <div className={`relative ${className}`}>
+    <motion.div layoutId={layoutId} className={`relative ${className}`}>
       <div className="absolute inset-0 flex items-center justify-center">
         <div
           className="absolute w-[62.5%] h-[62.5%] rounded-full animate-breathe"
@@ -27,7 +30,7 @@ const BreathingOrbs = ({ className = "w-64 h-64" }: BreathingOrbsProps) => {
           }}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 
