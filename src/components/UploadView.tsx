@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { Upload, FileText, X } from "lucide-react";
 import { motion } from "framer-motion";
 import BreathingOrbs from "./BreathingOrbs";
@@ -10,6 +10,13 @@ interface UploadViewProps {
 const UploadView = ({ onFilesUploaded }: UploadViewProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const ctaRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (files.length > 0 && ctaRef.current) {
+      ctaRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [files.length]);
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -139,6 +146,7 @@ const UploadView = ({ onFilesUploaded }: UploadViewProps) => {
             ))}
 
             <motion.button
+              ref={ctaRef}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
