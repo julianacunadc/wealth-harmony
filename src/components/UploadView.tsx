@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Upload, FileText, X } from "lucide-react";
 import { motion } from "framer-motion";
+import BreathingOrbs from "./BreathingOrbs";
 
 interface UploadViewProps {
   onFilesUploaded: () => void;
@@ -62,6 +63,7 @@ const UploadView = ({ onFilesUploaded }: UploadViewProps) => {
       className="flex flex-col items-center justify-center min-h-screen px-6 py-12"
     >
       <div className="w-full max-w-lg text-center">
+        <BreathingOrbs className="w-40 h-40 mb-8" />
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
