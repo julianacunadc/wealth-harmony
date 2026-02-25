@@ -1,29 +1,53 @@
 
 
-## Add Breathing Orbs to Upload Landing Page
+## Centered Orbs + Shared Transition Between Upload and Processing
 
-Add the same breathing orbs animation from the ProcessingView to the top of the UploadView, serving as a decorative brand element above the heading.
+### Problem
+1. The breathing orbs on the upload page are not visually centered with the title -- they sit as a block element above it.
+2. The orbs disappear and reappear when transitioning from Upload to Processing, instead of feeling like the same continuous element.
+
+### Solution
+
+Use Framer Motion's `layoutId` to create a seamless shared-element transition. The orbs will appear to grow and reposition from the upload page into the processing page, creating a fluid, connected experience.
 
 ### Changes
 
-**1. Extract a reusable `BreathingOrbs` component** (`src/components/BreathingOrbs.tsx`)
-- Contains the 4 blurred, pulsing circles with the same colors, sizes, blur values, and animation classes as in `ProcessingView.tsx` (lines 47-70).
-- Accepts an optional `className` prop for sizing control, so it can be rendered smaller on the landing page and larger on the processing page.
+**1. `src/components/BreathingOrbs.tsx`** -- Add `layoutId` support
+- Accept an optional `layoutId` prop.
+- Wrap the outer `div` in a `motion.div` with the `layoutId` so Framer Motion can animate it between mount/unmount across views.
 
-**2. Update `UploadView.tsx`**
-- Import and place `<BreathingOrbs />` above the H1 heading, inside the centered container.
-- Use a smaller size (e.g., `w-40 h-40`) so it acts as a subtle brand accent rather than dominating the page. The orb sizes inside will scale proportionally.
+**2. `src/components/UploadView.tsx`** -- Center orbs + add `layoutId`
+- Add `mx-auto` to center the orbs horizontally within the text-center container.
+- Pass `layoutId="breathing-orbs"` to the `BreathingOrbs` component.
 
-**3. Update `ProcessingView.tsx`**
-- Replace the inline orbs markup with the shared `<BreathingOrbs />` component (full size `w-64 h-64`) to avoid code duplication.
+**3. `src/components/ProcessingView.tsx`** -- Add matching `layoutId`
+- Pass `layoutId="breathing-orbs"` to the `BreathingOrbs` component.
+- This tells Framer Motion to treat both instances as the same element and animate the size/position transition automatically.
+
+**4. `src/pages/Index.tsx`** -- Adjust AnimatePresence mode
+- Change `AnimatePresence mode="wait"` to just `<AnimatePresence>` (no mode) so both views can be mounted simultaneously during the layout animation. This is required for `layoutId` transitions to work -- both the exiting and entering components must briefly coexist.
+
+### How It Works
+
+```text
+Upload View                    Processing View
++-----------+                  +------------------+
+|  [Orbs]   |  --- layoutId    |                  |
+|  w-40     |  --- animates    |    [Orbs]        |
+|  centered |  --- to --->     |    w-64          |
+|  Title    |                  |    centered      |
+|  Dropzone |                  |    Status text   |
++-----------+                  +------------------+
+```
+
+Framer Motion automatically interpolates size (w-40 to w-64), position, and any other style differences between the two instances sharing the same `layoutId`.
 
 ### Technical Details
 
-| File | Action |
+| File | Change |
 |------|--------|
-| `src/components/BreathingOrbs.tsx` | Create -- shared component with 4 animated orbs, accepts `className` prop |
-| `src/components/UploadView.tsx` | Edit -- add `<BreathingOrbs className="w-40 h-40 mb-8" />` before the H1 |
-| `src/components/ProcessingView.tsx` | Edit -- replace inline orbs with `<BreathingOrbs className="w-64 h-64 mb-12" />` |
-
-No new dependencies required. All existing Tailwind animations (`animate-breathe`, `animate-breathe-slow`, `animate-breathe-alt`) are already configured.
+| `src/components/BreathingOrbs.tsx` | Add optional `layoutId` prop, wrap in `motion.div` with `layoutId` |
+| `src/components/UploadView.tsx` | Add `mx-auto` to center orbs, pass `layoutId="breathing-orbs"` |
+| `src/components/ProcessingView.tsx` | Pass `layoutId="breathing-orbs"` |
+| `src/pages/Index.tsx` | Remove `mode="wait"` from `AnimatePresence` to allow overlapping mounts for layout animation |
 
